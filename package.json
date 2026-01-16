@@ -1,51 +1,61 @@
 {
-  "name": "@playwright/mcp",
-  "version": "0.0.55",
-  "description": "Playwright Tools for MCP",
+  "name": "@anthropic/mcp-server-camoufox",
+  "version": "0.1.0",
+  "description": "Playwright MCP server powered by Camoufox anti-detect browser",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microsoft/playwright-mcp.git"
+    "url": "git+https://github.com/rv192/playwright-mcp.git"
   },
-  "homepage": "https://playwright.dev",
+  "homepage": "https://github.com/rv192/playwright-mcp",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "rv192"
   },
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "npm run update-readme",
-    "update-readme": "node update-readme.js",
-    "docker-build": "docker build --no-cache -t playwright-mcp-dev:latest .",
-    "docker-rm": "docker rm playwright-mcp-dev",
-    "docker-run": "docker run -it -p 8080:8080 --name playwright-mcp-dev playwright-mcp-dev:latest",
-    "test": "playwright test",
-    "ctest": "playwright test --project=chrome",
-    "ftest": "playwright test --project=firefox",
-    "wtest": "playwright test --project=webkit",
-    "dtest": "MCP_IN_DOCKER=1 playwright test --project=chromium-docker",
-    "npm-publish": "npm run clean && npm run test && npm publish",
-    "copy-config": "cp ../playwright/packages/playwright/src/mcp/config.d.ts . && perl -pi -e \"s|import type \\* as playwright from 'playwright-core';|import type * as playwright from 'playwright';|\" ./config.d.ts",
-    "roll": "npm run copy-config && npm run lint"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "clean": "rm -rf dist",
+    "test": "node dist/smoke-test.js",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./index.d.ts",
-      "default": "./index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
-  "dependencies": {
-    "playwright": "1.58.0-alpha-2026-01-15",
-    "playwright-core": "1.58.0-alpha-2026-01-15"
-  },
   "bin": {
-    "mcp-server-playwright": "cli.js"
+    "mcp-server-camoufox": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.24.0",
+    "camoufox-js": "^0.8.5",
+    "commander": "^14.0.0",
+    "playwright-core": "^1.53.0",
+    "zod": "^3.25.0"
   },
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.24.0",
-    "@playwright/test": "1.58.0-alpha-2026-01-15",
-    "@types/node": "^24.3.0"
-  }
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  },
+  "keywords": [
+    "mcp",
+    "playwright",
+    "camoufox",
+    "browser",
+    "automation",
+    "anti-detect",
+    "scraping"
+  ]
 }

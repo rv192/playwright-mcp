@@ -1,6 +1,9 @@
-**/*
-README.md
-LICENSE
-!cli.js
-!index.*
-!config.d.ts
+src/
+tests/
+.github/
+*.ts
+tsconfig.json
+.gitignore
+CONTRIBUTING.md
+SECURITY.md
+Dockerfile
